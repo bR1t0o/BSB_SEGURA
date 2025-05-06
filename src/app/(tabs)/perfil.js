@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, Image,Button } from "react-native";
+import {useState} from "react";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import fotoPerfil from '../../../assets/images/fotostock.jpeg'; // Caminho correto
 import iconeEditar from '../../../assets/icons/icons8-edit.png';
+import iconeSubmit from "../../../assets/icons/icons8-done-48.png";
 
 export default function Perfil() {
   return (
@@ -13,7 +15,7 @@ export default function Perfil() {
       </View>
       <View style={styles.containerMid}>
         <Text style={{ fontSize: 16, color: "#251351", fontWeight: 500 }}>Dados pessoais</Text>
-        <Image style={styles.icon} source={iconeEditar} />
+        <BotaoDeEdicao />
       </View>
       <View style={styles.containerDados}>
         <Text style={styles.campos}>Nome completo</Text>
@@ -25,6 +27,20 @@ export default function Perfil() {
       </View>
       
     </View>
+  )
+}
+
+const BotaoDeEdicao = () =>{
+  const [imagem, setImagem] = useState(iconeEditar);
+  function aoEditar(){
+    if(imagem == iconeEditar) setImagem(iconeSubmit);
+    else setImagem(iconeEditar);
+  }
+
+  return(
+    <Pressable onPress={aoEditar}>
+      <Image style={styles.icon} source={imagem} />
+    </Pressable>
   )
 }
 

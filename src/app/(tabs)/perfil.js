@@ -1,34 +1,57 @@
 import {useState} from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import fotoPerfil from '../../../assets/images/fotostock.jpeg'; // Caminho correto
+import fotoPerfil from '../../../assets/images/fotostock.jpeg';
 import iconeEditar from '../../../assets/icons/icons8-edit.png';
 import iconeSubmit from "../../../assets/icons/icons8-done-48.png";
 
 export default function Perfil() {
   return (
     <View style={styles.container}>
-      <View style={styles.fundo}></View>
-      <View style={styles.containerTopo}>
-        <Image style={styles.foto} source={fotoPerfil} />
-        <Text style={styles.nome}>Emily Brown</Text>
-        <Text style={{ borderBottomWidth: 1, color: "#251351", borderColor: "#251351", fontSize: 12, }}>Alterar foto</Text>
-      </View>
-      <View style={styles.containerMid}>
-        <Text style={{ fontSize: 16, color: "#251351", fontWeight: 500 }}>Dados pessoais</Text>
-        <BotaoDeEdicao />
-      </View>
-      <View style={styles.containerDados}>
-        <Text style={styles.campos}>Nome completo</Text>
-        <Text style={styles.dados}>Emily Brown</Text>
-        <Text style={styles.campos}>Email</Text>
-        <Text style={styles.dados}>emily@email.com</Text>
-        <Text style={styles.campos}>Senha</Text>
-        <Text style={styles.dados}>********</Text>
-      </View>
-      
+      <View style={styles.barraDoTopo}></View>
+      <FotoENome />
+      <DadosPessoaisEBotaoDeEdicao />
+      <Dados /> 
+    </View>
+  );
+}
+
+const FotoENome = () => {
+
+  return(
+    <View style={styles.containerTopo}>
+      <Image style={styles.foto} source={fotoPerfil} />
+      <Text style={styles.nome}>Emily Brown</Text>
+      <Text style={{ borderBottomWidth: 1, color: "#251351", borderColor: "#251351", fontSize: 12, }}>Alterar foto</Text>
     </View>
   )
 }
+
+
+const DadosPessoaisEBotaoDeEdicao = () => {
+
+  return(
+    <View style={styles.containerDadosPessoaisEBotaoDeEdicao}>
+      <Text style={{ fontSize: 16, color: "#251351", fontWeight: 500 }}>Dados pessoais</Text>
+      <BotaoDeEdicao />
+    </View>
+  )
+}
+
+
+const Dados = () =>{
+
+  return(
+    <View style={styles.containerDados}>
+      <Text style={styles.campos}>Nome completo</Text>
+      <Text style={styles.dados}>Emily Brown</Text>
+      <Text style={styles.campos}>Email</Text>
+      <Text style={styles.dados}>emily@email.com</Text>
+      <Text style={styles.campos}>Senha</Text>
+      <Text style={styles.dados}>********</Text>
+    </View>
+  );
+}
+
 
 const BotaoDeEdicao = () =>{
   const [imagem, setImagem] = useState(iconeEditar);
@@ -44,7 +67,9 @@ const BotaoDeEdicao = () =>{
   )
 }
 
+
 const IMAGE_SIZE = 128;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: 1,
   },
-  containerMid: {
+  containerDadosPessoaisEBotaoDeEdicao: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -73,7 +98,7 @@ const styles = StyleSheet.create({
     rowGap: 5,
     margin: 10,
   },
-  fundo: {
+  barraDoTopo: {
     backgroundColor: "#251351",
     paddingTop: IMAGE_SIZE / 2 + 10,
     zIndex: 0,

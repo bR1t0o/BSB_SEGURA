@@ -1,49 +1,69 @@
 import {useState} from "react";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable, TextInput} from "react-native";
 import fotoPerfil from '../../../assets/images/fotostock.jpeg';
 import iconeEditar from '../../../assets/icons/icons8-edit.png';
 import iconeSubmit from "../../../assets/icons/icons8-done-48.png";
 
 export default function Perfil() {
+
+  const [isEditando, setEditando] = useState(false);
+  const [nome, setNome] = useState("Emily Brow");
+
+  const toggleEditando = () =>{
+    if(isEditando == false) setEditando(true);
+    else setEditando(false);
+  }
+
+// Depois preciso ver como passar o novo nome para o setNome().
+  const onChangeNome = () => {
+    setNome(novoNome);
+  }
+
+
   return (
     <View style={styles.container}>
       <View style={styles.barraDoTopo}></View>
-      <FotoENome />
-      <DadosPessoaisEBotaoDeEdicao />
-      <Dados /> 
+      <FotoENome nome={nome}/>
+      <DadosPessoaisEBotaoDeEdicao iseditando={isEditando} toggleeditando={toggleEditando}/>
+      <Dados iseditando={isEditando} nome={nome} setNome={setNome}/> 
     </View>
   );
 }
 
-const FotoENome = () => {
+const FotoENome = (nome) => {
 
   return(
     <View style={styles.containerTopo}>
       <Image style={styles.foto} source={fotoPerfil} />
-      <Text style={styles.nome}>Emily Brown</Text>
+      <Text style={styles.nome}>{nome}</Text>
       <Text style={{ borderBottomWidth: 1, color: "#251351", borderColor: "#251351", fontSize: 12, }}>Alterar foto</Text>
     </View>
   )
 }
 
 
-const DadosPessoaisEBotaoDeEdicao = () => {
+const DadosPessoaisEBotaoDeEdicao = (iseditando, toggleeditando) => {
 
   return(
     <View style={styles.containerDadosPessoaisEBotaoDeEdicao}>
       <Text style={{ fontSize: 16, color: "#251351", fontWeight: 500 }}>Dados pessoais</Text>
-      <BotaoDeEdicao />
+      <BotaoDeEdicao iseditando={iseditando} toggleeditando={toggleeditando}/>
     </View>
   )
 }
 
-
-const Dados = () =>{
+const Dados = (iseditando, nome, setNome) =>{
 
   return(
     <View style={styles.containerDados}>
       <Text style={styles.campos}>Nome completo</Text>
-      <Text style={styles.dados}>Emily Brown</Text>
+      <TextInput 
+        style={styles.dados}
+        value={nome}
+        // alterar essa parte. O valor de nome deve mudar ao clicar no botão de edição para confirmar e não onBlur.
+        onBlur={setNome}
+        editable={iseditando}
+      />
       <Text style={styles.campos}>Email</Text>
       <Text style={styles.dados}>emily@email.com</Text>
       <Text style={styles.campos}>Senha</Text>
@@ -53,15 +73,14 @@ const Dados = () =>{
 }
 
 
-const BotaoDeEdicao = () =>{
-  const [imagem, setImagem] = useState(iconeEditar);
-  function aoEditar(){
-    if(imagem == iconeEditar) setImagem(iconeSubmit);
-    else setImagem(iconeEditar);
-  }
+const BotaoDeEdicao = (iseditando, toggleeditando) =>{
+  let imagem; 
+  if(iseditando == false) imagem = iconeEditar;
+  else imagem = iconeSubmit;
+  // ficou meio confuso descer tanto esses iseditando e toggleeditando.
 
   return(
-    <Pressable onPress={aoEditar}>
+    <Pressable onPress={toggleeditando}>
       <Image style={styles.icon} source={imagem} />
     </Pressable>
   )

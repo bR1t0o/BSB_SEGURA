@@ -1,150 +1,68 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
-//Botão Primário (Ação Principal) 
-const PrimaryButton = ({ title, onPress }) => {
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+
+export const PrimaryButton = ({ label = "Button label",close }) => {
   return (
-    <TouchableOpacity style={styles.primaryButton} onPress={onPress}>
-      <Text style={styles.primaryText}>{title}</Text>
+    <TouchableOpacity style={styles.primaryButton} onPress={close}>
+
+
+      <Text style={styles.buttonTextPrimary}>{label}</Text>
+
+
     </TouchableOpacity>
   );
 };
 
-//Botão Secundário  
-const SecondaryButton = ({ title, onPress }) => {
+export const SecondaryButton = ({ label = "Button label", save }) => {
   return (
-    <TouchableOpacity style={styles.secondaryButton} onPress={onPress}>
-      <Text style={styles.secondaryText}>{title}</Text>
+    <TouchableOpacity style={styles.secondaryButton} onPress={save}>
+
+      <Text style={styles.buttonTextSecondary}>{label}</Text>
+
     </TouchableOpacity>
   );
 };
 
-//Botão Flutuante (Usado para adicionar algo) 
-const FloatingButton = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.floatingButton} onPress={onPress}>
-      <Ionicons name="add" size={28} color="white" />
-    </TouchableOpacity>
-  );
-};
-
-//Botão de Alternância (Toggle) 
-const ToggleButton = ({ option1, option2 }) => {
-  const [selected, setSelected] = useState(option1);
-
-  return (
-    <TouchableOpacity
-      style={[styles.toggleButton, selected === option2 && styles.activeToggle]}
-      onPress={() => setSelected(selected === option1 ? option2 : option1)}
-    >
-      <Text style={[styles.toggleText, selected === option2 && styles.activeToggleText]}>
-        {selected}
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
-//Botão de Filtro (Usado para filtragem de dados) 
-const FilterButton = ({ title, onPress }) => {
-  return (
-    <TouchableOpacity style={styles.filterButton} onPress={onPress}>
-      <Ionicons name="filter" size={18} color="white" />
-      <Text style={styles.filterText}>{title}</Text>
-    </TouchableOpacity>
-  );
-};
-
-//Botão de Voltar (Usado para navegação)
-const BackButton = () => {
-  const navigation = useNavigation();
-
-  return (
-    <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-      <Ionicons name="arrow-back" size={24} color="#6D3B9F" />
-    </TouchableOpacity>
-  );
-};
-
-//Estilos
 const styles = StyleSheet.create({
+
+
+  buttonTextPrimary: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: 'rgba(250, 250, 250, 1)'
+  },
+  buttonTextSecondary: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: 'rgba(8, 8, 8, 1)'
+  },
+
   primaryButton: {
-    backgroundColor: '#6D3B9F',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  primaryText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  secondaryButton: {
+    width: 80,
+    minHeight: 34,
     backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: '#6D3B9F',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    borderRadius: 24,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: 'rgba(192, 192, 192, 1)',
+
+
   },
-  secondaryText: {
-    color: '#6D3B9F',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  floatingButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: '#6D3B9F',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  toggleButton: {
-    backgroundColor: '#DDD',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  toggleText: {
-    color: '#333',
-    fontSize: 16,
-  },
-  activeToggle: {
-    backgroundColor: '#6D3B9F',
-  },
-  activeToggleText: {
-    color: 'white',
-  },
-  filterButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#6D3B9F',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-  },
-  filterText: {
-    color: 'white',
-    fontSize: 16,
-    marginLeft: 8,
-  },
-  backButton: {
-    padding: 10,
+
+  
+  secondaryButton: {
+    width: 62,
+    minHeight: 34,
+    backgroundColor: 'rgba(206, 206, 206, 1)',
+    borderRadius: 24,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+
+
+    borderWidth: 1,
+    borderColor: 'rgba(192, 192, 192, 1)',
   },
 });
 
-//Exportação de todos os botões 
-export { PrimaryButton, SecondaryButton, FloatingButton, ToggleButton, FilterButton, BackButton };
+

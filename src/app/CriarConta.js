@@ -7,55 +7,55 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import {useRouter} from "expo-router";
-import { fazerLogin } from "../../firebase/firebaseRegister";
+import { useRouter } from "expo-router";
+import { registrarUsuario } from "../../firebase/firebaseRegister";
 
 
-export default function LoginForm() {
-      
+export default function CriarConta() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
   const [erroEmail, setErroEmail] = useState("");
   const [erroSenha, setErroSenha] = useState("");
+  const [erroConfirmar, setErroConfirmar] = useState("");
   const router = useRouter();
-  const validarLogin = async () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  let temErro = false;
 
-  if (!emailRegex.test(email)) {
-    setErroEmail("E-mail inválido.");
-    temErro = true;
-  } else {
-    setErroEmail("");
-  }
+  const validarCriacao = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let temErro = false;
 
-  if (senha.length < 6) {
-    setErroSenha("A senha deve ter pelo menos 6 caracteres.");
-    temErro = true;
-  } else {
-    setErroSenha("");
-  }
-
-  if (!temErro) {
-    try {
-      const usuario = await fazerLogin(email, senha);
-      //console.log("Usuário logado:", usuario.uid);
-      //console.log("senha:",usuario.senha)
-
-      Alert.alert("Sucesso", "Login realizado com sucesso!");
-      router.replace("/principal");
-    } catch (erro) {
-      console.error("Erro no login:", erro);
-      Alert.alert("Erro no login", "E-mail ou senha inválidos.");
+    if (!emailRegex.test(email)) {
+      setErroEmail("E-mail inválido.");
+      temErro = true;
+    } else {
+      setErroEmail("");
     }
-  }
-};
 
-//function getIn(){router.push("/principal");}
+    if (senha.length < 6) {
+      setErroSenha("A senha deve ter pelo menos 6 caracteres.");
+      temErro = true;
+    } else {
+      setErroSenha("");
+    }
+
+    if (senha !== confirmarSenha) {
+      setErroConfirmar("As senhas não coincidem.");
+      temErro = true;
+    } else {
+      setErroConfirmar("");
+    }
+
+    if (!temErro) {
+      const user = await registrarUsuario(email, senha);
+      Alert.alert("Conta criada com sucesso!", "Agora você pode fazer login.");
+      router.replace("/");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.logoText}>Login</Text>
+        <Text style={styles.logoText}>Criar Conta</Text>
 
         <TextInput
           style={[styles.input, erroEmail ? styles.inputErro : null]}
@@ -77,18 +77,26 @@ export default function LoginForm() {
         />
         {erroSenha ? <Text style={styles.erroTexto}>{erroSenha}</Text> : null}
 
-        <View style={styles.forgotContainer}>
-          <Text style={styles.forgotText}>Esqueceu a senha?</Text>
-        </View>
+        <TextInput
+          style={[styles.input, erroConfirmar ? styles.inputErro : null]}
+          placeholder="Confirmar Senha"
+          placeholderTextColor="#ffb3b3"
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+          secureTextEntry
+        />
+        {erroConfirmar ? (
+          <Text style={styles.erroTexto}>{erroConfirmar}</Text>
+        ) : null}
 
-        <TouchableOpacity style={styles.loginButton} onPress={validarLogin/*getIn*/}>
-          <Text style={styles.loginText}>Entrar</Text>
+        <TouchableOpacity style={styles.loginButton} onPress={validarCriacao}>
+          <Text style={styles.loginText}>Cadastrar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.ou}>Ou</Text>
+        <Text style={styles.ou}>Já tem uma conta?</Text>
 
-        <TouchableOpacity onPress={()=>{router.push("/CriarConta")}}>
-          <Text style={styles.createAccount}>Criar conta</Text>
+        <TouchableOpacity onPress={() => router.replace("/")}>
+          <Text style={styles.createAccount}>Voltar para Login</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -121,7 +129,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FF6B81",
     marginBottom: 25,
-    
   },
   input: {
     width: "100%",
@@ -143,14 +150,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     alignSelf: "flex-start",
     marginBottom: 8,
-  },
-  forgotContainer: {
-    alignSelf: "flex-end",
-    marginBottom: 15,
-  },
-  forgotText: {
-    color: "#FF6B81",
-    fontSize: 14,
   },
   loginButton: {
     backgroundColor: "#FF6B81",

@@ -1,109 +1,119 @@
-import React, { useState } from 'react';
-import {  Text, TextInput, View, } from 'react-native';
+ import { useState } from 'react';
+import { Text, TextInput, View, Image } from 'react-native';
 import card_styles from '../styles/card_styles';
-import { BlurView } from 'expo-blur';
-//import { useFonts } from 'expo-font';
-//import * as SplashScreen from 'expo-splash-screen'; //basicamente um load-screen
-//import BotaoTeste from './butao';
-//SplashScreen.preventAutoHideAsync(); // se carregar rapido demais a load screen ainda mostra
+import Dropdown from './dropdown-e-Itens';
+import TagsContainer from './tags';
+import Icon from '@expo/vector-icons/Ionicons';
+import { PrimaryButton, SecondaryButton } from './Button';
+import { useCard } from '../context/CardContext';
 
-const CardPrincipal = () => {
+const CardPrincipal = ({onCancelar}) => {
 
-    /*const [loaded, notLoaded] = useFonts({
-        'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
-        'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf')    //useFonts é um hook que recebe 2 valores e retorna um booleano se conseguiu ou não alcançar o require da fonte
+    const { adicionarCard } = useCard()
+    const [titulo, setTitulo] = useState('');
+    const [descricao, setDescricao] = useState('');
 
-    });*/
+    const handleSalvar = () => {
+        if (titulo.trim() && descricao.trim()) {
+            adicionarCard(titulo, descricao); //passando as props do add do context
+            setTitulo('');
+            setDescricao('');
+            console.log("handleSalvar=true");
+            onCancelar();
 
-    const [text, setText] = useState('');                                  // sintaxe basica do useState: const [estado, setEstado] = useState(valorInicial); 
-    const [inputHeight, setinputHeight] = useState(40);                    // como o useState funfa: quando o/um componente renderiza, ele chama o useState e guarda o valor inicial depois, quando o setEstado é chamado, o react atualiza o estado e re-renderiza o componente
-                                                                         // o massa do useState é que ele não esquece do estado anterior por que no fundo ele faz tipo uma array que armazena os estados
-    /*useEffect(() => {                                                  // o useEffect tmb é um hook que permite  vc sincronizar uma ação com alguma coisa/sistema externo da aplicação. Ele recebe (setup, dependencia) basicamente: SE A DEPENDECIA MUDAR,O SETUP ACONTECE"
-        if (loaded || notLoaded) {
-            SplashScreen.hideAsync(); //se carregar ou nao, esconde a load-screen
         }
-
-    }, [loaded, notLoaded]); //essas aqui sao as dependencias
-
-    if (!loaded && !notLoaded) {
-        return null;
-    }*/
+    };
 
     return (
-        <BlurView intensity={22} style={[card_styles.card_container]}>
 
-            <View style={card_styles.header}>
-                <TextInput style={[card_styles.titulo]} placeholder="Descreva o que aconteceu" placeholderTextColor='rgba(250, 250, 250, 1)'></TextInput>
-                <View style={card_styles.divisoriaH}></View>
-                <View style={card_styles.helper}>
-                    <View style={card_styles.info}></View>
-                    <Text style={card_styles.helper}>O título deve resumir o tipo de infração como, por exemplo ”Assalto” ou "furto".</Text>
+        <View style={[card_styles.card_container]}>
 
-                </View>
-
-            </View>
+            <Header_Card text={titulo} setText={setTitulo} />
 
 
-            <View style={card_styles.body}>
-                <View style={card_styles.tags}></View>
+            <Body_Card text={descricao} setText={setDescricao} />
 
-                <View style={[card_styles.textBox, { minHeight: inputHeight }]}><TextInput
-                    style={[card_styles.descricao, { height: inputHeight }]} //altura é o inputHeight que vai ser atualizado ali embaixo
-                    placeholder="Descreva o que aconteceu"
-                    placeholderTextColor="rgba(250, 250, 250, 1)"
-                    multiline={true} //pode ter várias linhas
-                    maxLength={120}  //caracteres maximos
-                    value={text}
-                    onChangeText={(value) => setText(value)} //onChangeText é uma prop específica do textInput que é chamado toda vez que vc digita algo; Essa arrow function aí é a mesma coisa que function handleContentSizeChange(event) { setInputHeight(event.nativeEvent.contentSize.height);setInputHeight(event.nativeEvent.contentSize.height);} onContentSizeChange={handleContentSizeChange}
-                    onContentSizeChange={(event) =>  //recebe um evento quando o textinput muda
-                        setinputHeight(event.nativeEvent.contentSize.height)// atualiza o estado do inputHeight (pega a altura do texto digitado) 
-                    }
+            <Footer_Card   onSalvar={handleSalvar} onCancelar={onCancelar}/>
 
+        </View>
 
-                ></TextInput></View>
-                <View style={card_styles.media}></View>
-            </View>
-
-            <View style={card_styles.footer}>
-                
-                    <View style = {{width:'29%',height:'100%',backgroundColor:'black', borderRadius: 12}} />
-                    <View style = {{width:'29%',height:'100%',backgroundColor:'white',borderRadius: 12}}/>
-                
-
-            </View>
-
-        </BlurView>
     );
 };
 
+const Header_Card = (props) => {
+    return (
+        <View style={card_styles.header}>
+
+            <View style={card_styles.dropdown_container}>
+                <TextInput style={card_styles.titulo}
+                    placeholder="Descreva o que aconteceu"
+                    placeholderTextColor='rgba(250, 250, 250, 1)'
+                    maxLength={18} // pq chaves, quando usar chaves?
+                    value={props.text} //pq chaves?
+                    onChangeText={props.setText} // como queeu posso fazer setText() e parenteses? Ele ta puxando lá de cima? então não preciso fazer os parametros?
+                >
+                </TextInput>
+                <Dropdown />
+            </View>
+
+            <View style={card_styles.divisoriaH}></View>
+            <View style={card_styles.helper}>
+                <View >
+                    <Icon name='information-circle-outline' size={20} color={'white'} />
+                </View>
+                <Text style={card_styles.helper} >O título deve resumir o tipo de infração como, por exemplo ”Assalto” ou "furto".</Text>
+
+            </View>
+
+        </View>
+    )
+}
+const imgPlaceholder = require('../assets/images/ex.jpg');
+const Body_Card = (props) => {
+    return (
+
+        <View style={card_styles.body}>
+            <View style={card_styles.tags}>
+                <TagsContainer
+                />
+            </View>
+
+            <View style={[card_styles.textBox]}><TextInput
+                style={[card_styles.descricao]}
+                placeholder="Descreva o que aconteceu"
+                placeholderTextColor="rgba(250, 250, 250, 1)"
+                multiline={true} 
+                maxLength={140}  
+                value={props.text}
+                onChangeText={props.setText} 
 
 
 
+            ></TextInput></View>
+            <View style={card_styles.media}>
+                <Image
+                    source={imgPlaceholder}
+                    style={{ width: 69, height: 69 }}
+                />
+                <Image
+                    source={imgPlaceholder}
+                    style={{ width: 69, height: 69 }}
+                />
+            </View>
+        </View>
+    )
+}
+
+const Footer_Card = ({ onSalvar,onCancelar }) => {
+    return (
+
+        <View style={card_styles.footer}>
+
+            <PrimaryButton label="Cancelar" close={onCancelar}/>
+            <SecondaryButton label="Salvar" save={onSalvar} />
+
+
+        </View>
+    )
+}
 export default CardPrincipal;
-
-// como pesquisar duvidas/componentes recentes? demorei muito rpa achar esse boxshadow
-// view hell e como estruturar o trabalho com o figma
-// como me preocupar com a questão de tablet e aumentar/diminuir a tela?
-// como botar o blur por tras do card?
-// <TextInput style={card_styles.descricao} /*keyboardType='default'*/ placeholder="Descreva o que aconteceu" placeholderTextColor='rgba(250, 250, 250, 1)' multiline={true} ></TextInput>
-
-
-/*        PROBLEMAS
-
-A DISTANCIA DA DIVISORIA COM O HELPER NAO TA FUNFANDO
-A TELA NÃO TA COMPLETAMENTE DINAMICA, FUTURAMENTE TENHO QUE USAR OU DIMENSIONS OU USEDIMENSIONS PRA FAZER TUDO COM BASE NO TAMANHO DAS TELAS
-REFATORAR O CÓDIGO, CADA VIEW PODE E DEVE SER FEITA EM UM COMPONENTE SEPARADO PARA MELHOR LEGIBILIDADE DO CÓDIGO
-O BODY TA "DESLOCADO" PARA A DIREITA (PROVAVELMENTE UM PROBLEMA DE PROPORÇÃO DE TELA)
-EM ALGUM MOMENTO TROCAR DE EXPO PARA REACT NATIVE PURO, ASSIM PODEMOS BUILDAR O APP JUNTO COM AS FONTES E IMAGENS
-
-
-
-
-
-
-
-
-
-
-
-*/

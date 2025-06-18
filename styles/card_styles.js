@@ -11,26 +11,21 @@ const card_styles = StyleSheet.create({
         minHeight: 427,
         padding: '4.38%',
         borderRadius: '6.58%',
-        gap: '6.58%',
+        gap: '6%',
         boxShadow: '0 4 12 0 rgba(0,0,0,0.5)',
+       position: 'absolute',
+       overflow: 'hidden'
     },
-    info: {
-        width: '4.8%',
-        height: '53.3%',
-        borderRadius: '100%',
-        backgroundColor: 'red',
-        alignSelf: 'center'
-
-    },
+    
     // header vai ser outro view
     header: {
         minWidth: 333,
         //minHeight: 72, //botar limite de letras
         width: '91%',
-        height: '18.8%',
-        maxHeight: '18%',
-        gap: '2.19%',
-        //backgroundColor: 'rgba(0, 0, 0, 0.15)'//teste visual
+        height: '20.8%',
+        //maxHeight: '18%',
+        // gap: '2.19%',
+        //  backgroundColor: 'rgba(0, 0, 0, 0.15)'//teste visual
 
     },
     titulo: {
@@ -46,6 +41,7 @@ const card_styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(192, 192, 192, 1)',
         alignContent: 'center',
+
 
 
     },
@@ -69,10 +65,15 @@ const card_styles = StyleSheet.create({
     },
 
     tags: {
-        flex: 1,
-        backgroundColor: 'green',
-        width: '100%',
-        alignSelf: 'center'
+
+        width: 333,
+        height: 70,
+        marginBottom: 12 ,// Espaço para o próximo elemento
+      //  height: '33%',
+        //backgroundColor: 'green',
+        //  width: '100%',
+        //alignSelf: 'center',
+        // flexDirection: 'row'
     },
     textBox: {
 
@@ -84,8 +85,7 @@ const card_styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'rgba(192, 192, 192, 1)',
         alignSelf: 'center',
-        borderRadius: Math.min(333, 241) * 0.036 //isso num adianta nada, ainda não é dinamico, mas a ideia ta correta.
-
+        borderRadius: 8.68 
 
     },
     descricao: {
@@ -93,11 +93,12 @@ const card_styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
         fontSize: 10,
         color: 'rgba(250, 250, 250, 1)',
-        // flex: 1   por que se eu botar flex 1 aqui ele centraliza o texto?
+
         margin: '2%',
-        lineHeight: 30,
+        //lineHeight: 30,
         //PRA props tipo maxLenght ou palceholder= y eu tenho que sempre declarar-los no próprio componente?
-        textAlignVertical: 'top',
+        // textAlignVertical: 'top'
+
 
 
 
@@ -105,46 +106,40 @@ const card_styles = StyleSheet.create({
     },
 
     media: {
-        flex: 1,
-
-
-        backgroundColor: 'blue',
-        width: '100%',
-        alignSelf: 'center'
+        
+        flexDirection: 'row',
+        gap:10,
+       // backgroundColor: 'blue',
+       
+       
     },
     //outra view
     footer: {
         //minWidth: 333,
-        //minHeight: 34,
-        width: '100%',
-        height: '8%',
+        minHeight: 34,
+       // width: '100%',
+     
         gap: '3%',
-      
+        //backgroundColor:'green',
+        flex: 1,
+
         //backgroundColor: 'rgb(255, 255, 255)',
-        flexDirection:'row',
-        justifyContent:'flex-end'
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
         //justifyContent: 'flex-end'
 
         //aqui eu tenho que ter as tags
         //media nao vai ter por enquanto
     },
-    /*footer: {  //ISSO AQUI FOI COM O BOTAO DO CHATGPT
-        width: '100%',
-        height: '8%',
-        flexDirection: 'row', // Alinha os botões na horizontal
-        justifyContent: 'flex-end', // Joga os botões para o canto direito
-        alignItems: 'center', // Centraliza verticalmente
-        gap: 10, // Espaço entre os botões
-       // backgroundColor: 'rgb(255, 255, 255)', // Apenas para visualização
-        paddingHorizontal: 10, // Dá um espacinho das bordas
-    },*/
-    
-    teste: {
-        backgroundColor:'red',
-        width:30,
-        height:30
-    
+    dropdown_container: {
+        flexDirection: 'row',
+        //backgroundColor:'rgba(255, 0, 0, 1)',
+
+
     }
+
+
+
 
 });
 export default card_styles;

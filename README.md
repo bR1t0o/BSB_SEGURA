@@ -44,4 +44,7 @@ PARA RODAR O PROJETO:
 .Rode npm run android
 
 
-.Outra possibilidade é baixar a apk do projeto através do link : https://expo.dev/artifacts/eas/5uaSFZxqU4hMeFEAQPipou.aab
+.Outra possibilidade é baixar a apk do projeto através do link : https://expo.dev/accounts/arthurb_rt0/projects/bsb_segura/builds/2d766c3a-f2b6-40c8-84a2-f66c056525c0
+
+.Também é possível escanear o qr code: ![image](https://github.com/user-attachments/assets/18154b6e-4d24-4415-aad7-4eca0a0ee447)
+

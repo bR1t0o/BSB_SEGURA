@@ -42,3 +42,6 @@ PARA RODAR O PROJETO:
 
 
 .Rode npm run android
+
+
+.Outra possibilidade é baixar a apk do projeto através do link : https://expo.dev/artifacts/eas/5uaSFZxqU4hMeFEAQPipou.aab

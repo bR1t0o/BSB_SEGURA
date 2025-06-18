@@ -5,19 +5,19 @@ Projeto Integrador - PARTE I
 Membros da equipe:
 
 
-        Arthur Brito 					2312130001
+        Arthur Brito 				                	2312130001
 
-        Ian Miranda da Silva 				2312130090
+        Ian Miranda da Silva 				                2312130090
 
-        Stefisson Rafael Honorato da Silva Júnior       2312130093
+        Stefisson Rafael Honorato da Silva Júnior                       2312130093
 
-        Vitor Hugo Campos  				2312130182
+        Vitor Hugo Campos  				                2312130182
     
-        Leonardo Dias dos Passos Brito 		        2312130234
+        Leonardo Dias dos Passos Brito 		                        2312130234
 
-        Arthur Eduardo Ribeiro da Silva  		231213014
+        Arthur Eduardo Ribeiro da Silva  		                231213014
 
-        Matheus Turturro  				2312130130
+        Matheus Turturro  				                2312130130
     
 
 Para essa segunda etapa do projeto, além de diversas correções em relação ao front, foi adicionado um backend funcional de cadastro de usuário utilizando o Firebase. 
@@ -38,7 +38,7 @@ PARA RODAR O PROJETO:
 .Abra seu emulador (android studio)
 
 
-.Substitue as credenciais pelos dados oferecidos pelo classroom ou email 
+.No arquivo "firebaseConfig.js" (localizado na pasta firebase), substitua as credenciais pelos dados oferecidos pelo classroom ou email 
 
 
 .Rode npm run android
